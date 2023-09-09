@@ -1,0 +1,22 @@
+turns:
+- assistant_message: Certainly!
+  user_message: I have a paper that I am struggling to understand... Can you help
+    me?
+- assistant_message: I'm ready!
+  user_message: 'I would like you to extract a few (between 1 and 5, inclusive) topics
+    that the paper is pushing the frontier on. For example, if the paper is about
+    inserting a gene into corn using a new technique to make the plant more robust
+    to drought, you might extract:
+
+    1. Using a new technique to insert genes
+
+    2. Corn genetic modifications
+
+    3. Corn robustness to drought
+
+
+    Now I would like you to do the same for a paper I will give you now. I''ll provide
+    the abstract, introduction, and conclusion.
+
+
+    Are you ready?'

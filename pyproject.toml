@@ -12,3 +12,7 @@ python_version = "3.10"
 [[tool.mypy.overrides]]
 module = 'fire'
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = 'any_serde'
+ignore_missing_imports = true
