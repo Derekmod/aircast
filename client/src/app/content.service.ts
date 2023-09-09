@@ -25,21 +25,22 @@ export class ContentService {
   }
 
   getTitle(): string {
-    return '';
-    // return this.paperCurriculum.overview_module.name;
+    const paper = this.storage.getItem('paper');
+    return paper && JSON.parse(paper) && JSON.parse(paper).overview_module.name;
   }
 
   getContent(): string {
-    return '';
-    // return this.paperCurriculum.overview_module.blurb;
+    const paper = this.storage.getItem('paper');
+    return paper && JSON.parse(paper) && JSON.parse(paper).overview_module.blurb;
   }
 
   getQuestions(start: number, count: number): Observable<Question[]> {
-    // const currQuestions = [].slice(start, start + count);
-    // for (const question of currQuestions) {
-    //   question.shuffled_answers = getAllAnswers(question);
-    // }
-    return of([]);
+    const paper = this.storage.getItem('paper');
+    const currQuestions = paper && JSON.parse(paper) && JSON.parse(paper).overview_module.questions.slice(start, start + count);
+    for (const question of currQuestions) {
+      question.shuffled_answers = getAllAnswers(question);
+    }
+    return of(currQuestions);
   }
 
   getTotalContentCount(): number {
