@@ -1,4 +1,5 @@
 from flask import Flask, request
+from flask_cors import CORS, cross_origin
 from any_serde import to_data
 
 from backend.paper_parsing import parse_url, ParsedPaper
@@ -7,7 +8,7 @@ from backend.curriculum_generation import generate_curriculum
 from utils.path_utils import PROJECT_ROOT_PATH
 
 app = Flask(__name__)
-
+cors = CORS(app)
 
 @app.route("/")
 def hello_world():
@@ -38,9 +39,10 @@ def save_paper_contents():
 
 
 @app.route("/curriculum", methods=["POST"])
+@cross_origin()
 def get_curriculum():
     if request.method == "POST":
-        url = request.form.get("data")
+        url = request.get_json().get('data')
         if not isinstance(url, str):
             raise ValueError("Bad data type!")
 

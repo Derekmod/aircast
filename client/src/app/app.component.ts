@@ -26,7 +26,10 @@ export class AppComponent implements OnInit {
 
   constructor(private contentService: ContentService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    const paper = await this.contentService.getPaper();
+    console.log(paper);
+    console.log();
     this.totalQuestions = this.contentService.getTotalContentCount();
     this.content = this.contentService.getContent();
     this.title = this.contentService.getTitle();

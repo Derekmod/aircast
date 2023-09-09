@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverviewComponent } from './overview/overview.component';
 import { QuestionsComponent } from './questions/questions.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,9 @@ import { QuestionsComponent } from './questions/questions.component';
     AppRoutingModule,
     InfiniteScrollModule,
     BrowserAnimationsModule,
+    HttpClientModule
+
+    
     // MatProgressBarModule,
   ],
   providers: [],
