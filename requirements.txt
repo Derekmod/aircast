@@ -1,2 +1,4 @@
+Flask
 jinja2
 pre-commit
+types-Flask
