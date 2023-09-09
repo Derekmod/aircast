@@ -60,7 +60,8 @@
         </div>
     </div>
     <div *ngIf="!inQuestions || questions[questions.length - 1].isAnswered" class="d-grid gap-2 mt-3">
-      <button class="btn btn-dark" (click)="continue()">Continue</button>
+      <button *ngIf="loadedQuestions !== totalQuestions" class="btn btn-dark" (click)="continue()">Continue</button>
+      <button *ngIf="loadedQuestions === totalQuestions" class="btn btn-dark">Complete Lesson</button>
     </div>
   </div>
 
