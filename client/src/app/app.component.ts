@@ -53,6 +53,11 @@ export class AppComponent implements OnInit {
     this.inQuestions = true;
   }
 
+  selectAnswer(question: Question, answer: string) {
+    question.isCorrect = question.correct_answer === answer;
+    question.isAnswered = true;
+  }
+
   goBack() {
     // Use Angular's Router to navigate to the previous or specific route
     // this.router.navigate(['/previous-route']);

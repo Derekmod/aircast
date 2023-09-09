@@ -2,6 +2,9 @@ export interface Question {
     question: string
     correct_answer: string
     other_answers: string[];
+    shuffled_answers?: string[];
+    isAnswered?: boolean;
+    isCorrect?: boolean;
 }
 
 const shuffle = ([...arr]) => {

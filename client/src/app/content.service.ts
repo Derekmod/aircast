@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { PaperCurriculum, Question } from './models';
+import { PaperCurriculum, Question, getAllAnswers } from './models';
 
 @Injectable({
   providedIn: 'root'
@@ -79,7 +79,11 @@ Its influence extends beyond NLP, with researchers exploring its potential in ot
   }
 
   getQuestions(start: number, count: number): Observable<Question[]> {
-    return of(this.paperCurriculum.overview_module.questions.slice(start, start + count));
+    const currQuestions = this.paperCurriculum.overview_module.questions.slice(start, start + count);
+    for (const question of currQuestions) {
+      question.shuffled_answers = getAllAnswers(question);
+    }
+    return of(currQuestions);
   }
 
   getTotalContentCount(): number {
