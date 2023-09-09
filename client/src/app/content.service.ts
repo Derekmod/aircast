@@ -44,7 +44,7 @@ export class ContentService {
   }
 
   getTotalContentCount(): number {
-    return 0;
-    // return this.paperCurriculum.overview_module.questions.length;
+    const paper = this.storage.getItem('paper');
+    return paper && JSON.parse(paper) && JSON.parse(paper).overview_module.questions.length;
   }
 }
