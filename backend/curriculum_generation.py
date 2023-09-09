@@ -9,9 +9,13 @@ from utils.path_utils import PROJECT_ROOT_PATH
 
 
 MESSAGES_DIR = PROJECT_ROOT_PATH / "backend" / "messages"
+GENERATION_RESULTS_DIR = PROJECT_ROOT_PATH / "generations"
 
 
-def get_blurb(parsed_content: ParsedPaper) -> str:
+def get_blurb(url: str, parsed_content: ParsedPaper) -> str:
+    paper_results_dir = GENERATION_RESULTS_DIR / url.replace("/", "")
+    paper_results_dir.mkdir(parents=True, exist_ok=True)
+
     with (MESSAGES_DIR / "initial_trajectory.yaml").open("rt") as fin_traj:
         traj_data = yaml.load(fin_traj, Loader=yaml.SafeLoader)
 
@@ -19,21 +23,30 @@ def get_blurb(parsed_content: ParsedPaper) -> str:
 
     prompt_template = load_template(MESSAGES_DIR / "blurb_prompt.jinja2")
     prompt = prompt_template.render(**get_render_args(locals()))
-
     traj.turns.append(
         Turn(
             user_message=prompt,
             assistant_message=None,
-        )
+        ),
     )
+    response = generate(traj, save_path=paper_results_dir / "blurb.yaml")
+    traj.turns[-1].assistant_message = response
 
-    response = generate(traj)
+    redo_prompt_template = load_template(MESSAGES_DIR / "blurb_redo_prompt.jinja2")
+    redo_prompt = redo_prompt_template.render(**get_render_args(locals()))
+    traj.turns.append(
+        Turn(
+            user_message=redo_prompt,
+            assistant_message=None,
+        ),
+    )
+    redo_response = generate(traj, save_path=paper_results_dir / "blurb_redo.yaml")
 
-    return response
+    return redo_response
 
 
-def generate_curriculum(parsed_content: ParsedPaper) -> PaperCurriculum:
-    blurb = get_blurb(parsed_content)
+def generate_curriculum(url: str, parsed_content: ParsedPaper) -> PaperCurriculum:
+    blurb = get_blurb(url, parsed_content)
 
     return PaperCurriculum(
         overview_module=Module(

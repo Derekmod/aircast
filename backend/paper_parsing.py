@@ -13,14 +13,24 @@ class PaperSection:
 
 @dataclass
 class ParsedPaper:
+    raw_text: str
     sections: list[PaperSection]
+
+    def get_abstract(self) -> str:
+        raise NotImplementedError()
+
+    def get_introduction(self) -> str:
+        raise NotImplementedError()
+
+    def get_conclusion(self) -> str:
+        raise NotImplementedError()
 
 
 def parse_pdf(filename: str):
     return extract_text(filename)
 
 
-def parse_content_with_headings(text: str) -> list[PaperSection]:
+def parse_content_with_headings(text: str) -> ParsedPaper:
     lines = text.split("\n")
     sections: list[PaperSection] = []
     current_heading = None
@@ -30,7 +40,12 @@ def parse_content_with_headings(text: str) -> list[PaperSection]:
         # This condition checks if the line is in uppercase and has content (not just whitespace)
         if line.isupper() and line.strip():
             if current_heading:
-                sections.append({"header": current_heading, "content": current_content.strip()})
+                sections.append(
+                    PaperSection(
+                        header=current_heading,
+                        content=current_content.strip(),
+                    ),
+                )
                 current_content = ""  # Reset current_content for the next section
             current_heading = line.strip()
         elif current_heading:
@@ -42,10 +57,13 @@ def parse_content_with_headings(text: str) -> list[PaperSection]:
             PaperSection(
                 header=current_heading,
                 content=current_content.strip(),
-            )
+            ),
         )
 
-    return sections
+    return ParsedPaper(
+        raw_text=text,
+        sections=sections,
+    )
 
 
 def download_pdf(url: str) -> str:
@@ -61,10 +79,7 @@ def download_pdf(url: str) -> str:
 
 def parse_url(url: str) -> ParsedPaper:
     pdf_file = download_pdf(url)
-    if pdf_file:
-        text = parse_pdf(pdf_file)
-        parsed_content = parse_content_with_headings(text)
+    assert pdf_file
 
-    return ParsedPaper(
-        sections=parsed_content,
-    )
+    text = parse_pdf(pdf_file)
+    return parse_content_with_headings(text)
