@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentService } from './content.service';
+import { of } from 'rxjs';
 
-import { Question, getAllAnswers } from './models';
+import { Question } from './models';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,8 @@ import { Question, getAllAnswers } from './models';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  state: 'overview' | 'message' | 'questions' | 'results' = 'overview';
+
   questions: Question[] = [];
   title: string = '';
   content: string = '';
@@ -47,6 +50,15 @@ export class AppComponent implements OnInit {
 
   continue() {
     this.loadMoreItems();
+  }
+
+  moveToNextScreen() {
+    this.state = 'message';
+    of(null).pipe(
+      delay(1500)
+    ).subscribe(() => {
+      this.currentScreen = 'nextComponent';
+    });
   }
 
   goBack() {
