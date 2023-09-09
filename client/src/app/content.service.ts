@@ -17,9 +17,11 @@ export class ContentService {
   }
 
   async getPaper(): Promise<any> {
-    return await this.http.post<PaperCurriculum>(
+    const currPaper = await this.http.post<PaperCurriculum>(
       this.url, { data: this.testUrl }
     ).toPromise();
+    this.storage.setItem('paper', JSON.stringify(currPaper));
+    return currPaper;
   }
 
   getTitle(): string {
