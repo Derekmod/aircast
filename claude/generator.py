@@ -26,7 +26,9 @@ def generate(
     max_tokens_to_sample: int = 500,
     # TODO: inference params
 ) -> str:
-    anthropic = Anthropic()
+    anthropic = Anthropic(
+        api_key=get_claude_key(),
+    )
 
     prompt = ""
     for turn_idx, turn in enumerate(trajectory.turns):
@@ -45,4 +47,4 @@ def generate(
         prompt=prompt,
     )
 
-    return completion.completion
+    return completion.completion.lstrip()
