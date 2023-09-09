@@ -48,7 +48,7 @@ def get_curriculum():
 
         parsed_content = parse_url(url)
 
-        curriculum = generate_curriculum(parsed_content)
+        curriculum = generate_curriculum(url, parsed_content)
         curriculum_data = to_data(PaperCurriculum, curriculum)
         return curriculum_data
     else:

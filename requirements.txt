@@ -6,5 +6,6 @@ mypy
 pdfminer
 pdfminer.six
 pre-commit
+PyYAML
 types-Flask
 types-requests
