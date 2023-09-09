@@ -62,6 +62,7 @@ def get_question_answers(
     question_line: str,
     question_idx: int,
     question: str,
+    unique_idx: int,
 ) -> tuple[str, list[str]]:
     answers_template = load_template(MESSAGES_DIR / "get_answers.jinja2")
     answers_prompt = answers_template.render(**get_render_args(locals()))
@@ -71,7 +72,7 @@ def get_question_answers(
             assistant_message=None,
         ),
     )
-    response = generate(traj, save_path=paper_results_dir / f"answers_{get_unique_idx()}.yaml")
+    response = generate(traj, save_path=paper_results_dir / f"answers_{unique_idx}.yaml")
 
     answers: list[str] = []
     for answer_line in response.split("\n"):
@@ -79,14 +80,14 @@ def get_question_answers(
         if not answer_line:
             continue
 
-        answer_match = re.fullmatch(r"(?:\d+[\.:\)] )(.*)", answer_line)
+        answer_match = re.fullmatch(r"(?:\d+[\.:\)] )?(.*)", answer_line)
         assert answer_match
         answers.append(answer_match.group(1))
 
     return answers[0], answers[1:]
 
 
-def reformat_response_as_questions(paper_results_dir: Path, traj: Trajectory) -> list[Question]:
+def reformat_response_as_questions(paper_results_dir: Path, traj: Trajectory, unique_idx: int) -> list[Question]:
     reformat_questions_template = load_template(MESSAGES_DIR / "reformat_questions.jinja2")
     reformat_questions_prompt = reformat_questions_template.render(**get_render_args(locals()))
     traj.turns.append(
@@ -108,12 +109,14 @@ def reformat_response_as_questions(paper_results_dir: Path, traj: Trajectory) ->
         assert match
         question_idx = int(match.group(1))
         question = match.group(2)
+        unique_idx += 1
         correct_answer, incorrect_answers = get_question_answers(
             paper_results_dir,
             copy.deepcopy(traj),
             question_line,
             question_idx,
             question,
+            unique_idx,
         )
         questions.append(Question(question=question, correct_answer=correct_answer, other_answers=incorrect_answers))
 
@@ -129,10 +132,11 @@ def generate_questions_from_blurb_traj(paper_results_dir: Path, traj: Trajectory
             assistant_message=None,
         ),
     )
-    response = generate(traj, save_path=paper_results_dir / f"questions_from_blurb_{get_unique_idx()}.yaml")
+    unique_idx = 0
+    response = generate(traj, save_path=paper_results_dir / f"questions_from_blurb_{unique_idx}.yaml")
     traj.turns[-1].assistant_message = response
 
-    return reformat_response_as_questions(paper_results_dir, copy.deepcopy(traj))
+    return reformat_response_as_questions(paper_results_dir, copy.deepcopy(traj), unique_idx)
 
 
 def generate_curriculum(url: str, parsed_content: ParsedPaper) -> PaperCurriculum:
