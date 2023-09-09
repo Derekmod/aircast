@@ -25,8 +25,9 @@ export class ContentService {
   }
 
   getTitle(): string {
-    const paper = this.storage.getItem('paper');
-    return paper && JSON.parse(paper) && JSON.parse(paper).overview_module.name;
+    return 'Attention is All You Need';
+    // const paper = this.storage.getItem('paper');
+    // return paper && JSON.parse(paper) && JSON.parse(paper).overview_module.name;
   }
 
   getContent(): string {

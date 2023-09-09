@@ -13,6 +13,13 @@ export class QuestionsComponent {
   @Output() continue: EventEmitter<any> = new EventEmitter<any>();
   @Output() completeLesson: EventEmitter<any> = new EventEmitter<any>();
 
+  get question(): Question {
+    if (this.questions.length === 0) {
+      return {} as Question;
+    }
+    return this.questions[this.questions.length - 1];
+  }
+
   selectAnswer(question: Question, answer: string) {
     question.isCorrect = question.correct_answer === answer;
     question.isAnswered = true;
