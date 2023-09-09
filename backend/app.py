@@ -1,7 +1,7 @@
 from flask import Flask, request
 from any_serde import to_data
 
-from backend.paper_parsing import parse_url
+from backend.paper_parsing import parse_url, ParsedPaper
 from backend.curriculum import PaperCurriculum
 from backend.curriculum_generation import generate_curriculum
 from utils.path_utils import PROJECT_ROOT_PATH
@@ -21,20 +21,18 @@ def save_paper_contents():
         if not isinstance(url, str):
             raise ValueError("Bad data type!")
 
-        parsed_content = parse_url(url)
+        parsed_paper = parse_url(url)
+        parsed_paper_data = to_data(ParsedPaper, parsed_paper)
 
-        if parsed_content:
-            try:
-                paper_contents_dir = PROJECT_ROOT_PATH / "paper_contents"
-                paper_contents_dir.mkdir(exist_ok=True)
+        try:
+            paper_contents_dir = PROJECT_ROOT_PATH / "paper_contents"
+            paper_contents_dir.mkdir(exist_ok=True)
 
-                with open(f"paper_contents/{url}", "w") as file:
-                    file.write(parsed_content)
-                return "String saved successfully!"
-            except Exception as e:
-                raise ValueError("Error saving string!") from e
-        else:
-            return "No url received!"
+            with open(f"paper_contents/{url}", "w") as file:
+                file.write(parsed_paper_data)
+            return "Parsed paper saved successfully!"
+        except Exception as e:
+            raise ValueError("Error saving aper contents!") from e
     else:
         return "Invalid request method"
 
