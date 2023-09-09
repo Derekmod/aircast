@@ -10,7 +10,7 @@ import { Question } from './models';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  state: 'overview' | 'message' | 'questions' | 'results' = 'overview';
+  state: 'list' | 'overview' | 'message' | 'questions' | 'results' = 'list';
 
   questions: Question[] = [];
   title: string = '';
@@ -27,9 +27,10 @@ export class AppComponent implements OnInit {
   constructor(private contentService: ContentService) {}
 
   async ngOnInit() {
+  }
+
+  async initPaper() {
     const paper = await this.contentService.getPaper();
-    console.log(paper);
-    console.log();
     this.totalQuestions = this.contentService.getTotalContentCount();
     this.content = this.contentService.getContent();
     this.title = this.contentService.getTitle();
@@ -51,8 +52,12 @@ export class AppComponent implements OnInit {
     // this.loadMoreItems();
   }
 
-  continue() {
-    if (this.state === 'overview') {
+  async continue() {
+    if (this.state === 'list') {
+      this.state = 'overview';
+      await this.initPaper();
+    }
+    else if (this.state === 'overview') {
       this.state = 'questions';
     }
     this.loadMoreItems();

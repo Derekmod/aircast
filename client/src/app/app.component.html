@@ -14,6 +14,22 @@
 
 <div class="container mt-3">
 
+  <ng-container *ngIf="state === 'list'">
+    <div class="row">
+      <div class="col-12">
+        <h3>Welcome to Aircast!</h3><br />
+        <h4>Choose from this week's digest below.</h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-secondary" (click)="continue()">Attention is All You Need</button>
+      </div>
+    </div>
+
+  </ng-container>
+
   <app-overview *ngIf="state === 'overview'" [title]="title" [content]="content" (continue)="continue()"></app-overview>
 
   <div
