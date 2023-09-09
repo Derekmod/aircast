@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <!-- Back arrow and branding/logo -->
+  <a class="navbar-brand" href="#" (click)="goBack()">
+    <span class="bi-arrow-left"></span>
+  </a>
+
+  <!-- Progress bar -->
+  <div class="ms-auto">
+    <div class="progress" style="width: 70%; height: 10px; margin-top: 8px;">
+      <div class="progress-bar" role="progressbar" [style.width]="progress + '%'" aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-12">
+      <h3>{{title}}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12" style="white-space: pre-wrap;">
+      {{ content }}
+    </div>
+  </div>
+  <div
+    infinite-scroll
+    [infiniteScrollDistance]="scrollDistance"
+    [infiniteScrollUpDistance]="scrollUpDistance"
+    [infiniteScrollThrottle]="throttle"
+    (scrolled)="onScroll()"
+  ></div>
+
+  <div *ngIf="inQuestions" class="row">
+    <div class="col-12">
+      <hr />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div *ngIf="inQuestions">
+        <div *ngFor="let question of questions; let i = index">
+          <h4>{{ question.question }}</h4>
+          <button
+            *ngFor="let answer of question.shuffled_answers; let first = first"
+            class="btn  "
+            [ngClass]="{
+              'ms-3': !first,
+              'btn-primary': !question.isAnswered,
+              'btn-success': question.isAnswered && question.correct_answer === answer,
+              'btn-danger': question.isAnswered && question.correct_answer !== answer,
+            }"
+            (click)="selectAnswer(question, answer)"
+          >
+            {{ answer }}
+          </button>
+          <p *ngIf="question.isAnswered && question.isCorrect">Congratulations! You answered correctly.</p>
+          <p *ngIf="question.isAnswered && !question.isCorrect">You are incorrect. The correct answer has been highlighted above.</p>
+        </div>
+    </div>
+    <div *ngIf="!inQuestions || questions[questions.length - 1].isAnswered" class="d-grid gap-2 mt-3">
+      <button *ngIf="loadedQuestions !== totalQuestions" class="btn btn-dark" (click)="continue()">Continue</button>
+      <button *ngIf="loadedQuestions === totalQuestions" class="btn btn-dark">Complete Lesson</button>
+    </div>
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>
