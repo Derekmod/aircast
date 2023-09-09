@@ -13,7 +13,9 @@
 </nav>
 
 <div class="container mt-3">
+
   <app-overview [title]="title" [content]="content" (continue)="continue()"></app-overview>
+
   <div
     infinite-scroll
     [infiniteScrollDistance]="scrollDistance"
@@ -22,14 +24,9 @@
     (scrolled)="onScroll()"
   ></div>
 
-  <div *ngIf="inQuestions" class="row">
-    <div class="col-12">
-      <hr />
-    </div>
-  </div>
-
   <app-questions
     [questions]="questions"
+    [totalQuestions]="totalQuestions"
     (continue)="continue()"
   ></app-questions>
 

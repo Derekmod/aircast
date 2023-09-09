@@ -16,9 +16,6 @@ export class AppComponent implements OnInit {
   loadedQuestions: number = 0;
   progress: number = 0;
 
-  inQuestions: boolean = false;
-  getAllAnswers = getAllAnswers;
-
   // Infinite scroll settings
   scrollDistance = 1.5;
   scrollUpDistance = 1.5;
@@ -50,7 +47,6 @@ export class AppComponent implements OnInit {
 
   continue() {
     this.loadMoreItems();
-    this.inQuestions = true;
   }
 
   goBack() {
