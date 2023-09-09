@@ -14,7 +14,7 @@
 
 <div class="container mt-3">
 
-  <app-overview [title]="title" [content]="content" (continue)="continue()"></app-overview>
+  <app-overview *ngIf="state === 'overview'" [title]="title" [content]="content" (continue)="continue()"></app-overview>
 
   <div
     infinite-scroll
@@ -25,6 +25,7 @@
   ></div>
 
   <app-questions
+    *ngIf="state === 'questions'"
     [questions]="questions"
     [totalQuestions]="totalQuestions"
     (continue)="continue()"

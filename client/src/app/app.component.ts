@@ -49,6 +49,9 @@ export class AppComponent implements OnInit {
   }
 
   continue() {
+    if (this.state === 'overview') {
+      this.state = 'questions';
+    }
     this.loadMoreItems();
   }
 
