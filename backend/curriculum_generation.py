@@ -1,7 +1,8 @@
 from backend.curriculum import PaperCurriculum, Question, Module
+from backend.paper_parsing import ParsedPaper
 
 
-def generate_curriculum(parsed_content: str) -> PaperCurriculum:
+def generate_curriculum(parsed_content: ParsedPaper) -> PaperCurriculum:
     del parsed_content
     return PaperCurriculum(
         overview_module=Module(

@@ -1,5 +1,6 @@
 any_serde
 Flask
 jinja2
+mypy
 pre-commit
 types-Flask
