@@ -9,6 +9,7 @@ import { ContentService } from './content.service';
 export class AppComponent implements OnInit {
   items: string[] = [];
   title: string = '';
+  content: string = '';
   totalItems: number = 0;
   loadedItems: number = 0;
   progress: number = 0;
@@ -22,16 +23,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.totalItems = this.contentService.getTotalContentCount();
+    this.content = this.contentService.getContent();
     this.loadMoreItems();
     this.title = this.contentService.getTitle();
   }
 
   loadMoreItems() {
-    this.contentService.getContent(this.loadedItems, 1).subscribe(newItems => {
-      this.items = [...this.items, ...newItems];
-      this.loadedItems += newItems.length;
-      this.updateProgress();
-    });
+    // this.contentService.getContent(this.loadedItems, 1).subscribe(newItems => {
+    //   this.items = [...this.items, ...newItems];
+    //   this.loadedItems += newItems.length;
+    //   this.updateProgress();
+    // });
   }
 
   updateProgress() {
