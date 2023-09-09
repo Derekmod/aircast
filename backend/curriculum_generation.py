@@ -79,7 +79,7 @@ def get_question_answers(
         if not answer_line:
             continue
 
-        answer_match = re.fullmatch(r"(?:\d+[\.:\)] )(.*)", answer_line)
+        answer_match = re.fullmatch(r"(?:\d+[\.:\)] )?(.*)", answer_line)
         assert answer_match
         answers.append(answer_match.group(1))
 
