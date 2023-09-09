@@ -67,7 +67,23 @@ def parse_content_with_headings(text: str) -> ParsedPaper:
 
 
 def download_pdf(url: str) -> str:
-    response = requests.get(url)
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+            " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36"
+        ),
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+        # Add any other headers you want to include
+    }
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+            " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        ),
+    }
+    response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tfile:
