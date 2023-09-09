@@ -6,16 +6,24 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OverviewComponent } from './overview/overview.component';
+import { QuestionsComponent } from './questions/questions.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    OverviewComponent,
+    QuestionsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     InfiniteScrollModule,
     BrowserAnimationsModule,
+    HttpClientModule
+
+    
     // MatProgressBarModule,
   ],
   providers: [],

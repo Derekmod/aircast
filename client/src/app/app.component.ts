@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentService } from './content.service';
+import { of, delay } from 'rxjs';
 
-import { Question, getAllAnswers } from './models';
+import { Question } from './models';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +10,14 @@ import { Question, getAllAnswers } from './models';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  state: 'overview' | 'message' | 'questions' | 'results' = 'overview';
+
   questions: Question[] = [];
   title: string = '';
   content: string = '';
   totalQuestions: number = 0;
   loadedQuestions: number = 0;
   progress: number = 0;
-
-  inQuestions: boolean = false;
-  getAllAnswers = getAllAnswers;
 
   // Infinite scroll settings
   scrollDistance = 1.5;
@@ -26,7 +26,10 @@ export class AppComponent implements OnInit {
 
   constructor(private contentService: ContentService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    const paper = await this.contentService.getPaper();
+    console.log(paper);
+    console.log();
     this.totalQuestions = this.contentService.getTotalContentCount();
     this.content = this.contentService.getContent();
     this.title = this.contentService.getTitle();
@@ -49,13 +52,19 @@ export class AppComponent implements OnInit {
   }
 
   continue() {
+    if (this.state === 'overview') {
+      this.state = 'questions';
+    }
     this.loadMoreItems();
-    this.inQuestions = true;
   }
 
-  selectAnswer(question: Question, answer: string) {
-    question.isCorrect = question.correct_answer === answer;
-    question.isAnswered = true;
+  moveToNextScreen() {
+    this.state = 'message';
+    of(null).pipe(
+      delay(1500)
+    ).subscribe(() => {
+      this.state = 'questions';
+    });
   }
 
   goBack() {

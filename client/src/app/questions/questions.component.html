@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-12">
+        <div *ngFor="let question of questions; let i = index">
+            <h4>{{ question.question }}</h4>
+            <button
+                *ngFor="let answer of question.shuffled_answers; let first = first"
+                class="btn"
+                [ngClass]="{
+                    'ms-3': !first,
+                    'btn-primary': !question.isAnswered,
+                    'btn-success': question.isAnswered && question.correct_answer === answer,
+                    'btn-danger': question.isAnswered && question.correct_answer !== answer,
+                }"
+                (click)="selectAnswer(question, answer)"
+            >
+            {{ answer }}
+            </button>
+            <p *ngIf="question.isAnswered && question.isCorrect">Congratulations! You answered correctly.</p>
+            <p *ngIf="question.isAnswered && !question.isCorrect">You are incorrect. The correct answer has been highlighted above.</p>
+        </div>
+        <div *ngIf="questions[questions.length - 1].isAnswered" class="d-grid gap-2 mt-3">
+            <button *ngIf="questions.length !== totalQuestions" class="btn btn-dark" (click)="clickContinue()">Continue</button>
+            <button *ngIf="questions.length === totalQuestions" class="btn btn-dark" (click)="clickComplete()">Complete Lesson</button>
+        </div>
+    </div>
+</div>
