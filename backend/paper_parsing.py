@@ -1,7 +1,12 @@
 from dataclasses import dataclass
+import any_serde
 from pdfminer.high_level import extract_text
 import requests
 import tempfile
+
+import yaml
+
+from utils.path_utils import PROJECT_ROOT_PATH
 
 
 @dataclass
@@ -94,8 +99,24 @@ def download_pdf(url: str) -> str:
 
 
 def parse_url(url: str) -> ParsedPaper:
+    save_dir = PROJECT_ROOT_PATH / "generations" / url.replace("/", "")
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    save_path = save_dir / "parsed.yaml"
+    if save_path.exists():
+        with save_path.open("rt") as fin_parsed:
+            parsed_paper_data = yaml.load(fin_parsed, Loader=yaml.SafeLoader)
+        parsed_paper = any_serde.from_data(ParsedPaper, parsed_paper_data)
+        return parsed_paper
+
     pdf_file = download_pdf(url)
     assert pdf_file
 
     text = parse_pdf(pdf_file)
-    return parse_content_with_headings(text)
+    parsed_paper = parse_content_with_headings(text)
+
+    parsed_paper_data = any_serde.to_data(ParsedPaper, parsed_paper)
+    with save_path.open("wt") as fout_parsed:
+        yaml.dump(parsed_paper_data, fout_parsed)
+
+    return parsed_paper
