@@ -3,6 +3,9 @@ any_serde
 Flask
 jinja2
 mypy
+pdfminer
+pdfminer.six
 pre-commit
 PyYAML
 types-Flask
+types-requests
