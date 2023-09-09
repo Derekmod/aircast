@@ -17,11 +17,12 @@ class Content:
 @dataclass
 class Module:
     name: str
+    blurb: str
     content: list[Content]
 
 
 @dataclass
-class Curriculum:
+class PaperCurriculum:
     overview_module: Module
-    content_modules: list[Module]
-    conclusion_module: Module
+    # content_modules: list[Module]
+    # conclusion_module: Module
