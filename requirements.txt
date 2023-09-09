@@ -1,3 +1,4 @@
+any_serde
 Flask
 jinja2
 pre-commit

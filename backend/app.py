@@ -1,6 +1,9 @@
 from flask import Flask, request
+from any_serde import to_data
 
 from backend.paper_parsing import parse_url
+from backend.curriculum import PaperCurriculum
+from backend.curriculum_generation import generate_curriculum
 from utils.path_utils import PROJECT_ROOT_PATH
 
 app = Flask(__name__)
@@ -36,6 +39,22 @@ def save_paper_contents():
         return "Invalid request method"
 
 
-# Call with `python backend/app.py`
+@app.route("/curriculum", methods=["POST"])
+def get_curriculum():
+    if request.method == "POST":
+        url = request.form.get("data")
+        if not isinstance(url, str):
+            raise ValueError("Bad data type!")
+
+        parsed_content = parse_url(url)
+
+        curriculum = generate_curriculum(parsed_content)
+        curriculum_data = to_data(PaperCurriculum, curriculum)
+        return curriculum_data
+    else:
+        return "Invalid request method"
+
+
+# Call with `PYTHONPATH=. python backend/app.py`
 if __name__ == "__main__":
     app.run()
