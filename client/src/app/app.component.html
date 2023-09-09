@@ -13,16 +13,7 @@
 </nav>
 
 <div class="container mt-3">
-  <div class="row">
-    <div class="col-12">
-      <h3>{{title}}</h3>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12" style="white-space: pre-wrap;">
-      {{ content }}
-    </div>
-  </div>
+  <app-overview [title]="title" [content]="content" (continue)="continue()"></app-overview>
   <div
     infinite-scroll
     [infiniteScrollDistance]="scrollDistance"
