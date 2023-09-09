@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentService } from './content.service';
 
+import { Question, getAllAnswers } from './models';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  items: string[] = [];
+  questions: Question[] = [];
   title: string = '';
   content: string = '';
-  totalItems: number = 0;
-  loadedItems: number = 0;
+  totalQuestions: number = 0;
+  loadedQuestions: number = 0;
   progress: number = 0;
+
+  inQuestions: boolean = false;
+  getAllAnswers = getAllAnswers;
 
   // Infinite scroll settings
   scrollDistance = 1.5;
@@ -22,30 +27,30 @@ export class AppComponent implements OnInit {
   constructor(private contentService: ContentService) {}
 
   ngOnInit() {
-    this.totalItems = this.contentService.getTotalContentCount();
+    this.totalQuestions = this.contentService.getTotalContentCount();
     this.content = this.contentService.getContent();
-    this.loadMoreItems();
     this.title = this.contentService.getTitle();
   }
 
   loadMoreItems() {
-    // this.contentService.getContent(this.loadedItems, 1).subscribe(newItems => {
-    //   this.items = [...this.items, ...newItems];
-    //   this.loadedItems += newItems.length;
-    //   this.updateProgress();
-    // });
+    this.contentService.getQuestions(this.loadedQuestions, 1).subscribe(newQuestions => {
+      this.questions = [...this.questions, ...newQuestions];
+      this.loadedQuestions += newQuestions.length;
+      this.updateProgress();
+    });
   }
 
   updateProgress() {
-    this.progress = (this.loadedItems / this.totalItems) * 100;
+    this.progress = (this.loadedQuestions / this.totalQuestions) * 100;
   }
 
   onScroll() {
-    this.loadMoreItems();
+    // this.loadMoreItems();
   }
 
   continue() {
     this.loadMoreItems();
+    this.inQuestions = true;
   }
 
   goBack() {

@@ -47,10 +47,26 @@ Its attention mechanisms allow it to handle long-range dependencies in data, mak
 Impact:
 
 The Transformer architecture has revolutionized the field of natural language processing. Its design principles have been the foundation for models like BERT, GPT, and many others, which have achieved state-of-the-art results on a wide range of tasks.
-Its influence extends beyond NLP, with researchers exploring its potential in other domains like computer vision.
-
-    `,
-    questions: []
+Its influence extends beyond NLP, with researchers exploring its potential in other domains like computer vision.`,
+    questions: [
+      {
+        question: 'Why is the paper cool?',
+        correct_answer: "Things are cool.",
+        other_answers: [
+            "Objects are rad.",
+            "I am a turtle",
+        ],
+      },
+      {
+        question: 'What is the paper about?',
+        correct_answer: "things",
+        other_answers: [
+            "Stuff",
+            "Junk",
+            "Something",
+        ],
+      }
+    ]
     }
   };
 
@@ -62,7 +78,7 @@ Its influence extends beyond NLP, with researchers exploring its potential in ot
     return this.paperCurriculum.overview_module.blurb;
   }
 
-  getQuestion(start: number, count: number): Observable<Question[]> {
+  getQuestions(start: number, count: number): Observable<Question[]> {
     return of(this.paperCurriculum.overview_module.questions.slice(start, start + count));
   }
 
