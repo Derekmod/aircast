@@ -9,16 +9,10 @@ class Question:
 
 
 @dataclass
-class Content:
-    message: str
-    questions: list[Question]
-
-
-@dataclass
 class Module:
     name: str
     blurb: str
-    content: list[Content]
+    questions: list[Question]
 
 
 @dataclass
