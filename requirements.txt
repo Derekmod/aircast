@@ -4,4 +4,5 @@ Flask
 jinja2
 mypy
 pre-commit
+PyYAML
 types-Flask
