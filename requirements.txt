@@ -1,3 +1,4 @@
+anthropic
 any_serde
 Flask
 jinja2
