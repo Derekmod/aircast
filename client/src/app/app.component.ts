@@ -8,6 +8,7 @@ import { ContentService } from './content.service';
 })
 export class AppComponent implements OnInit {
   items: string[] = [];
+  title: string = '';
   totalItems: number = 0;
   loadedItems: number = 0;
   progress: number = 0;
@@ -22,10 +23,11 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.totalItems = this.contentService.getTotalContentCount();
     this.loadMoreItems();
+    this.title = this.contentService.getTitle();
   }
 
   loadMoreItems() {
-    this.contentService.getContent(this.loadedItems, 10).subscribe(newItems => {
+    this.contentService.getContent(this.loadedItems, 1).subscribe(newItems => {
       this.items = [...this.items, ...newItems];
       this.loadedItems += newItems.length;
       this.updateProgress();
@@ -41,6 +43,12 @@ export class AppComponent implements OnInit {
   }
 
   continue() {
-    // Implement your logic to move forward with content from the service
+    this.loadMoreItems();
   }
+
+  goBack() {
+    // Use Angular's Router to navigate to the previous or specific route
+    // this.router.navigate(['/previous-route']);
+  }
+
 }

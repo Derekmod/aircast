@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
+import { Summary } from './models';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ContentService {
-  private content = [
-    // Your content here. For example:
-    'Item 1', 'Item 2', 'Item 3', // ...
-  ];
+  private summary: Summary = {
+    title: 'Attention is All You Need',
+    content: [
+      'Item 1', 'Item 2', 'Item 3',
+    ],
+  };
+
+  getTitle(): string {
+    return this.summary.title;
+  }
 
   getContent(start: number, count: number): Observable<string[]> {
-    return of(this.content.slice(start, start + count));
+    return of(this.summary.content.slice(start, start + count));
   }
 
   getTotalContentCount(): number {
-    return this.content.length;
+    return this.summary.content.length;
   }
 }
