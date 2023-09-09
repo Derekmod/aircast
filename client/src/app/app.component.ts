@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentService } from './content.service';
-import { of } from 'rxjs';
+import { of, delay } from 'rxjs';
 
 import { Question } from './models';
 
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     of(null).pipe(
       delay(1500)
     ).subscribe(() => {
-      this.currentScreen = 'nextComponent';
+      this.state = 'questions';
     });
   }
 
