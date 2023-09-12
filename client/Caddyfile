@@ -19,7 +19,7 @@
     respond /health 200
 
     # serve from the 'dist' folder (Angular has been set to build into the 'dist' folder)
-    root * dist
+    root * dist/client
 
     # enable gzipping responses
     encode gzip
