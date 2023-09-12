@@ -161,3 +161,5 @@ cython_debug/
 
 /paper_contents
 /backend/generations
+
+.DS_Store
