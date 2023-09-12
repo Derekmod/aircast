@@ -11,7 +11,7 @@ import re
 from utils.path_utils import PROJECT_ROOT_PATH
 
 
-MESSAGES_DIR = PROJECT_ROOT_PATH / "backend" / "messages"
+MESSAGES_DIR = PROJECT_ROOT_PATH / "messages"
 GENERATION_RESULTS_DIR = PROJECT_ROOT_PATH / "generations"
 
 
