@@ -55,6 +55,6 @@ def get_curriculum():
         return "Invalid request method"
 
 
-# Call with `PYTHONPATH=. python backend/app.py`
+# Call with `PYTHONPATH=. python backend/main.py`
 if __name__ == "__main__":
     app.run()
