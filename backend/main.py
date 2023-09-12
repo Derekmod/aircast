@@ -2,9 +2,9 @@ from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from any_serde import to_data
 
-from backend.paper_parsing import parse_url, ParsedPaper
-from backend.curriculum import PaperCurriculum
-from backend.curriculum_generation import generate_curriculum
+from paper_parsing import parse_url, ParsedPaper
+from curriculum import PaperCurriculum
+from curriculum_generation import generate_curriculum
 from utils.path_utils import PROJECT_ROOT_PATH
 
 app = Flask(__name__)
@@ -55,6 +55,6 @@ def get_curriculum():
         return "Invalid request method"
 
 
-# Call with `PYTHONPATH=. python backend/app.py`
+# Call with `PYTHONPATH=. python backend/main.py`
 if __name__ == "__main__":
     app.run()

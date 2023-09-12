@@ -1,6 +1,7 @@
 anthropic
 any_serde
 Flask
+Flask-Cors
 jinja2
 mypy
 pdfminer
@@ -9,3 +10,4 @@ pre-commit
 PyYAML
 types-Flask
 types-requests
+gunicorn

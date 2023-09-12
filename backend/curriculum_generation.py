@@ -1,5 +1,5 @@
-from backend.curriculum import PaperCurriculum, Question, Module
-from backend.paper_parsing import ParsedPaper
+from curriculum import PaperCurriculum, Question, Module
+from paper_parsing import ParsedPaper
 from claude.generator import generate, Trajectory, Turn
 import yaml
 import any_serde
@@ -11,7 +11,7 @@ import re
 from utils.path_utils import PROJECT_ROOT_PATH
 
 
-MESSAGES_DIR = PROJECT_ROOT_PATH / "backend" / "messages"
+MESSAGES_DIR = PROJECT_ROOT_PATH / "messages"
 GENERATION_RESULTS_DIR = PROJECT_ROOT_PATH / "generations"
 
 

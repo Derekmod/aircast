@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '@env';
 
-import { PaperCurriculum, Question, getAllAnswers } from './models';
+import { PaperCurriculum, Question, getAllAnswers } from '@models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContentService {
-  private url: string = `http://127.0.0.1:5000/curriculum`;
+  private url: string = `${environment.SERVICE_BASE_URL}/curriculum`;
   private testUrl = 'https://arxiv.org/pdf/1706.03762.pdf';
   private storage: Storage;
 
