@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 /paper_contents
-/generations
+/backend/generations
