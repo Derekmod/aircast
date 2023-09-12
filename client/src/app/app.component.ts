@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ContentService } from './content.service';
 import { of, delay } from 'rxjs';
 
-import { Question } from './models';
+import { Question } from '@models';
 
 @Component({
   selector: 'app-root',
