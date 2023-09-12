@@ -9,3 +9,4 @@ pre-commit
 PyYAML
 types-Flask
 types-requests
+gunicorn
