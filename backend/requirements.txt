@@ -1,6 +1,7 @@
 anthropic
 any_serde
 Flask
+Flask-Cors
 jinja2
 mypy
 pdfminer
