@@ -1,5 +1,5 @@
-from backend.curriculum import PaperCurriculum, Question, Module
-from backend.paper_parsing import ParsedPaper
+from curriculum import PaperCurriculum, Question, Module
+from paper_parsing import ParsedPaper
 from claude.generator import generate, Trajectory, Turn
 import yaml
 import any_serde
